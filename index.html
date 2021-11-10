@@ -43,9 +43,17 @@ table, th, td {
   </tr>
 </table>
 <script>
-	window.addEventListener("message", function(message){
-		alert(message.data);
-	});
+	if (window.addEventListener) {
+		window.addEventListener("message", onMessage, false);
+	} else {
+		window.attachEvent("onmessage", onMessage);
+	}
+	function onMessage(event) {
+		if (event && event.data) 
+		{
+			eventHandlerFromVA(event.data);
+		}
+	}
 </script>
 	
 </body>
