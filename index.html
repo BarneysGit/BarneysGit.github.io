@@ -8,5 +8,20 @@
 	<input type="button" value="Save Filter Selection" onClick="alert('Your VA filters have been saved.')"/>
 </form>
 
+	   if (window.addEventListener) {
+       // For standards-compliant web browsers
+       window.addEventListener("message", onMessage, false);
+   } else {
+       window.attachEvent("onmessage", onMessage);
+   }
+   // Retrieve data and begin processing
+   function onMessage(event) {
+       if (event && event.data)
+       {
+           //process event.data
+       }
+   }
+	
+	
 </body>
 </html>
