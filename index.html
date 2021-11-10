@@ -54,6 +54,16 @@ table, th, td {
 			eventHandlerFromVA(event.data);
 		}
 	}
+	
+	function sendMessage(message)
+	{
+		var url= (window.location != window.parent.location)
+			? document.referrer
+			: document.location.href;
+		window.parent.postMessage(message, url);
+	}
+	  
+	
 </script>
 	
 </body>
