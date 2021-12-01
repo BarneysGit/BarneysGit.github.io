@@ -1,70 +1,41 @@
 <!DOCTYPE html>
 <html>
-<head>
-</head>
-<body style="background-color:powderblue;">
+<body>
 
-<form>
-	<input type="button" value="Save Filter Selection" onClick="alert('Your VA filters have been saved.')"/>
-</form>
-
-<style>
-table, th, td {
-  border:1px solid black;
-  }
-  </style>
+<h2>Fetch API with button</h2>
 
 
-<table style="width:75%">
-  <tr>
-    <th>User</th>
-    <th>filterSelectionName</th>
-    <th>Make</th>
-    <th>Model</th>
-    <th>Part</th>
-    <th>Year</th>
-    
-  </tr>
-  <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-	  <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-</table>
-<script>
-	if (window.addEventListener) {
-		window.addEventListener("message", onMessage, false);
-	} else {
-		window.attachEvent("onmessage", onMessage);
-	}
-	function onMessage(event) {
-		if (event && event.data) 
-		{
-			eventHandlerFromVA(event.data);
-		}
-	}
-	
-	function sendMessage(message)
-	{
-		var url= (window.location != window.parent.location)
-			? document.referrer
-			: document.location.href;
-		window.parent.postMessage(message, url);
-	}
-	  
-	
-</script>
-	
+   <button  id="fetchdata"> Begin CAS Session </button> 
+
+
+<div id="result"></div>
+
+
 </body>
+
+<script>
+
+   const fetchDataBtn = document.querySelector('#fetchdata')
+   const result = document.querySelector('#result')
+   
+   document.getElementById("fetchdata").addEventListener("click", sendRequest);
+   
+   function sendRequest(){
+   fetch("http://sasserver.demo.sas.com:8777/cas/sessions", {
+      method: 'POST',
+      headers: {
+         "Authorization": "Bearer eyJhbGciOiJSUzI1NiIsImprdSI6Imh0dHBzOi8vbG9jYWxob3N0L1NBU0xvZ29uL3Rva2VuX2tleXMiLCJraWQiOiJsZWdhY3ktdG9rZW4ta2V5IiwidHlwIjoiSldUIn0.eyJqdGkiOiI0YThhM2JkOTE5MTk0YTM4OTM0NTE4ZWY0MmM1OTNiZSIsImV4dF9pZCI6InVpZD1zYXNkZW1vLG91PXVzZXJzLGRjPXZpeWFkZW1vLGRjPWNvbSIsInJlbW90ZV9pcCI6IjEwLjk2LjEyLjI1MSIsInN1YiI6IjA4NTRkYTIwLWNkZWUtNGRlYS04ZGU0LThhNmEwNzY5ODQwNyIsInNjb3BlIjpbIm9wZW5pZCJdLCJjbGllbnRfaWQiOiJmZXRjaElEIiwiY2lkIjoiZmV0Y2hJRCIsImF6cCI6ImZldGNoSUQiLCJncmFudF90eXBlIjoiYXV0aG9yaXphdGlvbl9jb2RlIiwidXNlcl9pZCI6IjA4NTRkYTIwLWNkZWUtNGRlYS04ZGU0LThhNmEwNzY5ODQwNyIsIm9yaWdpbiI6ImxkYXAiLCJ1c2VyX25hbWUiOiJzYXNkZW1vIiwiZW1haWwiOiJzYXNkZW1vQG5vbmUuc2FzLmNvbSIsImF1dGhfdGltZSI6MTYzODM2MTU4MSwicmV2X3NpZyI6ImQwNWU3NmYwIiwiaWF0IjoxNjM4MzYxNTgxLCJleHAiOjE2MzgzOTc1ODEsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3QvU0FTTG9nb24vb2F1dGgvdG9rZW4iLCJ6aWQiOiJ1YWEiLCJhdWQiOlsiZmV0Y2hJRCIsIm9wZW5pZCJdfQ.eDsRcFfdJxhQOLTCIa6gmykzCowXS5KXFLpOmhFG-cgAFt20wLHzsqQK-v_WJpzR06h4NfaorMfA8RH-XfDFdJsq15NnlleOpLPdfl8F605YC1-u7K33RUIiHkrx_Mkwg6grhbtErpBRAWDEXLevVxqoqjrRt5aB0ChN3Nrq32_KRKHOr6_E8BNSHFidfmlmyjr_3ZDIwNYWevAUCaHHjYXM8mLym9lehJNJtBprFxBWbGCPP1uiUWtguX03VJ6eI0R1HknXKw-3cRLmS9iG7GhS_7azcPAG9jlcsfK0cYssuq76KtQeZ1P8h2i37CPSEHIzHIMv-3HlP_Wnjv1GxQ",
+         "Content-Type": "application/vnd.sas.cas.session+json",
+         "Connection": "keep-alive",
+         "Accept-Encoding": "gzip, deflate, br",
+         "Accept": "*/*"}
+     })
+         .then(res => res.json())
+         .then(data => {
+         result.innerText = JSON.stringify(data, null, 2)
+         })
+         .catch(error => console.log(error))
+   }
+   
+   </script>
 </html>
